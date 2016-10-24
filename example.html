@@ -1,0 +1,25 @@
+<!doctype html>
+<title>kalulu js test page</title>
+<script src=lib.js></script>
+<script src=libg.js></script>
+<script>
+var scene = createScene(800, 400)    // create a scene of 800 by 400
+var hare = scene.image("kalulu.png") // load an image
+
+// let user drag the image around, using the event.follow function
+var x = 10
+var y = 10
+
+// set a delegate to the scene that handles drawing and down events (mouse or touch)
+scene.setDelegate({
+    draw: function(g) { g.drawImage(hare, x, y) },
+    ondown: function(event) {
+        var startx = x // if we remember the start pos, there is never a jump
+        var starty = y
+        event.follow(function(event2) { // follow the down event until it goes up
+            x = startx + event2.delta.x
+            y = starty + event2.delta.y
+        })
+    }
+})
+</script>
